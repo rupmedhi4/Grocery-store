@@ -11,31 +11,42 @@ import {
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 import { Logo } from './Logo';
+import Navbar from './Components/Navbar';
+import NavPhoto from './Components/NavPhoto';
+import FeatureCard from './Components/FeatureCard';
+import Products from './Components/Products';
+import Footer from './Components/Footer';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+
+} from "react-router-dom";
+import AllProducts from './Components/SeeAllProducts/AllProducts';
+import Cart from './Components/Shopping-Cart/Cart';
 
 function App() {
   return (
-    <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl">
-        <Grid minH="100vh" p={3}>
-          <ColorModeSwitcher justifySelf="flex-end" />
-          <VStack spacing={8}>
-            <Logo h="40vmin" pointerEvents="none" />
-            <Text>
-              Edit <Code fontSize="xl">src/App.js</Code> and save to reload.
-            </Text>
-            <Link
-              color="teal.500"
-              href="https://chakra-ui.com"
-              fontSize="2xl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn Chakra
-            </Link>
-          </VStack>
-        </Grid>
-      </Box>
-    </ChakraProvider>
+    <Router>
+      <ChakraProvider theme={theme}>
+        <Navbar />
+        <Routes>
+        
+          <Route path="/" element={
+            <>  
+            <NavPhoto />
+              <Products />
+            </>
+
+          } />
+            <Route path='/allProducts' element={<AllProducts/>}/>
+            <Route path='/shoppingcart' element={<Cart/>}/>
+        </Routes>
+        <Footer />
+      </ChakraProvider>
+    </Router>
+
+
   );
 }
 
