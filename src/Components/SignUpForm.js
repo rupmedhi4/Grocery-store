@@ -11,14 +11,19 @@ import {
 import { Form } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { SignUpHandler } from './Redux/Slices/FirebaseSignupSlices';
+import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 
 const SignUpForm = () => {
   const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
 
   const dispatch = useDispatch();
+  
   const submitHandler = () => {
-    dispatch(SignUpHandler(name));
-//   console.log(name)
+    dispatch(SignUpHandler({name,email,password}));
+
   };
   
   return (
@@ -45,12 +50,12 @@ const SignUpForm = () => {
 
       <FormControl id="email" mb="4">
         <FormLabel>Email address</FormLabel>
-        <Input type="email" />
+        <Input type="email" onChange={(e)=>(setEmail(e.target.value))}/>
       </FormControl>
 
       <FormControl id="password" mb="4">
         <FormLabel>Password</FormLabel>
-        <Input type="password" />
+        <Input type="password" onChange={(e)=>(setPassword(e.target.value))}/>
       </FormControl>
 
       <Button colorScheme="teal" mb="4" width="100%" onClick={submitHandler}>
