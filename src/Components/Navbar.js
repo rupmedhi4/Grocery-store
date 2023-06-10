@@ -16,13 +16,12 @@ import { ColorModeSwitcher } from "../ColorModeSwitcher";
 const Navbar = () => {
 
   const loginHandler=async()=>{
-    try{
-         alert("done")
-    }catch(err){
-alert(err.message)
-    }
-  
-   
+    navigate("/login")
+  }
+
+  const navigate = useNavigate()
+  const signupHandler = ()=>{
+     navigate("/signup")
   }
   return (
     <Flex
@@ -103,7 +102,7 @@ alert(err.message)
           
         />
         {/* Sign Up Button */}
-        <Button colorScheme="teal" variant="outline" marginRight={2}>
+        <Button colorScheme="teal" variant="outline" marginRight={2} onClick={signupHandler}>
           Sign Up
         </Button>
 
