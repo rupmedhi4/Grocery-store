@@ -10,16 +10,20 @@ import {
   Divider,
   Flex,
 } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { AddToCartHandler } from '../Redux/Slices/AllProductSlices';
 
 export default function FeatureCard({ product }) {
   const productArray = useSelector(state => state.ShoppingCartSlices.dummyArray);
 
+  const dispatch = useDispatch();
+
   const addHandler = (id) => {
     const filteredArray = productArray.filter(item => item.id === id);
 
-    console.log(filteredArray);
-    // Perform the logic to add the product to the cart
+    dispatch(AddToCartHandler({filteredArray}))
+  //  console.log(filteredArray);
+    
   };
 
   return (

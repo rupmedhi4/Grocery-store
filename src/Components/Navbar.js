@@ -18,6 +18,8 @@ import { useSelector } from "react-redux";
 const Navbar = () => {
 
   const user = useSelector(state => state.isLoginSlices.user);
+  const addToCartBadge = useSelector(state => state.AllProductSlice.addToCart);
+
 
 
   const loginHandler = async () => {
@@ -122,9 +124,14 @@ const Navbar = () => {
         {/* Sign Up Button */}
 
         <Flex marginRight={"7rem"}>
-          {user ? <Button colorScheme="teal" variant="solid" onClick={signOutHandler}>
+          {user ? <>
+          <Button colorScheme="teal" variant="solid" onClick={signOutHandler}>
             Sign Out
           </Button> :
+         <Button colorScheme="teal" variant="solid">
+            Add to Cart {addToCartBadge.length}
+          </Button>
+          </> :
             <>
               <Button colorScheme="teal" variant="outline" marginRight={2} onClick={signupHandler}>
                 Sign Up

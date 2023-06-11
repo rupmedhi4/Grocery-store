@@ -202,7 +202,8 @@ const AllProductSlice = createSlice({
 
         ],
         bodyphoto:"https://salinaka-ecommerce.web.app/images/banner-girl.789f1fa6f451ad26c5039fcbc049ace7.png",
-        allProductsPhoto: "https://salinaka-ecommerce.web.app/images/banner-guy.fbf4f0f7396fe31ca288dc1dd9822342.png"
+        allProductsPhoto: "https://salinaka-ecommerce.web.app/images/banner-guy.fbf4f0f7396fe31ca288dc1dd9822342.png",
+        addToCart :[],
 
     },
 
@@ -210,11 +211,16 @@ const AllProductSlice = createSlice({
         ShowAllProductHandler: (state, action) => {
             const data = action.payload
             console.log(data)
+        },
+        AddToCartHandler : (state, action)=>{
+          const  filteredArray = action.payload
+          state.addToCart = [...state.addToCart,filteredArray]
+          
         }
     },
 });
 
 
-export const { ShowAllProductHandler } = AllProductSlice.actions;
+export const { ShowAllProductHandler,AddToCartHandler } = AllProductSlice.actions;
 
 export default AllProductSlice.reducer;
