@@ -12,6 +12,7 @@ import { SearchIcon } from "@chakra-ui/icons";
 import { FcShop } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import { ColorModeSwitcher } from "../ColorModeSwitcher";
+import { auth } from "./Firebase/FireBase";
 
 const Navbar = () => {
 
@@ -22,6 +23,14 @@ const Navbar = () => {
   const navigate = useNavigate()
   const signupHandler = ()=>{
      navigate("/signup")
+  }
+
+  const signOutHandler = async()=>{
+   try{
+    await auth.signOut();
+   }catch(err){
+    alert(err.message)
+   } 
   }
   return (
     <Flex
@@ -99,17 +108,24 @@ const Navbar = () => {
           backgroundColor="blue"
           aria-label="Shopping Logo"
           marginRight={"6rem"}
+         
           
         />
         {/* Sign Up Button */}
+        <Flex marginRight={"7rem"}>
         <Button colorScheme="teal" variant="outline" marginRight={2} onClick={signupHandler}>
           Sign Up
         </Button>
 
         {/* Login Button */}
-        <Button colorScheme="teal" variant="solid" onClick={loginHandler}>
+        <Button marginRight={"4"}colorScheme="teal" variant="solid" onClick={loginHandler}>
           Login
         </Button>
+        <Button colorScheme="teal" variant="solid"  onClick={signOutHandler}>
+          Sign Out
+        </Button>
+        </Flex>
+       
       </Flex>     
        <ColorModeSwitcher/>
     </Flex>

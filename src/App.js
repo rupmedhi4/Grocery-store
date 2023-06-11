@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ChakraProvider,
   Box,
@@ -26,8 +26,28 @@ import {
 import AllProducts from './Components/SeeAllProducts/AllProducts';
 import Cart from './Components/Shopping-Cart/Cart';
 import Login from './Components/Login';
+import { useDispatch } from 'react-redux';
+import { checkLogin } from './Components/Redux/Slices/isLoginSlices';
+import { auth } from './Components/Firebase/FireBase';
+
 
 function App() {
+  const [user, setUser] = useState(null);
+  const dispatch = useDispatch();
+
+  useEffect(async () => {
+    try {
+      const unsubscribe = auth.onAuthStateChanged((user) => {
+        setUser(user);
+        dispatch(checkLogin(user))
+      });
+      return () => unsubscribe();
+    } catch (err) {
+      alert(arr.massage)
+    }
+  }, []);
+  console.log(user)
+
   return (
     <Router>
       <ChakraProvider theme={theme}>
