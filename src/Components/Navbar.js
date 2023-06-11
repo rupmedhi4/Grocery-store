@@ -13,29 +13,33 @@ import { FcShop } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import { ColorModeSwitcher } from "../ColorModeSwitcher";
 import { auth } from "./Firebase/FireBase";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
 
-  const loginHandler=async()=>{
+  const user = useSelector(state => state.isLoginSlices.user);
+
+
+  const loginHandler = async () => {
     navigate("/login")
   }
 
   const navigate = useNavigate()
-  const signupHandler = ()=>{
-     navigate("/signup")
+  const signupHandler = () => {
+    navigate("/signup")
   }
 
-  const signOutHandler = async()=>{
-   try{
-    await auth.signOut();
-   }catch(err){
-    alert(err.message)
-   } 
+  const signOutHandler = async () => {
+    try {
+      await auth.signOut();
+    } catch (err) {
+      alert(err.message)
+    }
   }
   return (
     <Flex
       as="nav"
-      
+
       align="center"
       justify="space-between"
       padding={4}
@@ -43,7 +47,7 @@ const Navbar = () => {
       color="white"
     >
       <Box marginLeft={"6rem"}>
-        
+
         <IconButton
           icon={<FcShop size={"2.5rem"} />}
           size="xl"
@@ -51,14 +55,15 @@ const Navbar = () => {
           aria-label="Shopping Logo"
           marginRight={2}
         />
-         {/* Home Link */}
-         <Link
+        {/* Home Link */}
+        <Link
           href="/"
           marginRight={4}
           style={{ textDecoration: "none" }}
           _hover={{
-           color:"red",
-            boxShadow: "0 0 5px rgba(0, 0, 0, 0.2)",}}
+            color: "red",
+            boxShadow: "0 0 5px rgba(0, 0, 0, 0.2)",
+          }}
         >
 
           Home
@@ -67,23 +72,26 @@ const Navbar = () => {
 
         <Link href="/shoppingcart" marginRight={4} style={{ textDecoration: "none" }}
           _hover={{
-           color:"red",
-            boxShadow: "0 0 5px rgba(0, 0, 0, 0.2)",}}>
+            color: "red",
+            boxShadow: "0 0 5px rgba(0, 0, 0, 0.2)",
+          }}>
           Shop
         </Link>
 
-     
+
         <Link href="/allProducts" marginRight={4} style={{ textDecoration: "none" }}
           _hover={{
-           color:"red",
-            boxShadow: "0 0 5px rgba(0, 0, 0, 0.2)",}}>
-         Featured
+            color: "red",
+            boxShadow: "0 0 5px rgba(0, 0, 0, 0.2)",
+          }}>
+          Featured
         </Link>
         <Link href="/contact" marginRight={4} style={{ textDecoration: "none" }}
           _hover={{
-           color:"red",
-            boxShadow: "0 0 5px rgba(0, 0, 0, 0.2)",}}>
-         Recommended
+            color: "red",
+            boxShadow: "0 0 5px rgba(0, 0, 0, 0.2)",
+          }}>
+          Recommended
         </Link>
       </Box>
 
@@ -108,26 +116,31 @@ const Navbar = () => {
           backgroundColor="blue"
           aria-label="Shopping Logo"
           marginRight={"6rem"}
-         
-          
+
+
         />
         {/* Sign Up Button */}
-        <Flex marginRight={"7rem"}>
-        <Button colorScheme="teal" variant="outline" marginRight={2} onClick={signupHandler}>
-          Sign Up
-        </Button>
 
-        {/* Login Button */}
-        <Button marginRight={"4"}colorScheme="teal" variant="solid" onClick={loginHandler}>
-          Login
-        </Button>
-        <Button colorScheme="teal" variant="solid"  onClick={signOutHandler}>
-          Sign Out
-        </Button>
+        <Flex marginRight={"7rem"}>
+          {user ? <Button colorScheme="teal" variant="solid" onClick={signOutHandler}>
+            Sign Out
+          </Button> :
+            <>
+              <Button colorScheme="teal" variant="outline" marginRight={2} onClick={signupHandler}>
+                Sign Up
+              </Button>
+
+              {/* Login Button */}
+              <Button marginRight={"4"} colorScheme="teal" variant="solid" onClick={loginHandler}>
+                Login
+              </Button>
+            </>}
+
+
         </Flex>
-       
-      </Flex>     
-       <ColorModeSwitcher/>
+
+      </Flex>
+      <ColorModeSwitcher />
     </Flex>
 
 
