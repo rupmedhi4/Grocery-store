@@ -17,6 +17,8 @@ import { checkLogin } from './Components/Redux/Slices/isLoginSlices';
 import { auth } from './Components/Firebase/FireBase';
 import PrivateRoutes from './Components/PrivateRoutes';
 import Dashboard from './Components/Dashboard/Dashboard';
+import Modal from './Components/Modal/Modal';
+import Modall from './Components/Modal/Modal';
  function App() {
   const [user, setUser] = useState(null);
   const dispatch = useDispatch();
@@ -53,10 +55,12 @@ import Dashboard from './Components/Dashboard/Dashboard';
           <Route path="/shoppingcart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUpForm />} />
+          <Route path="/addtocarts" element={<Modal />} />
           <Route path="/dashboard" element={<PrivateRoutes component={Dashboard} alt={Login} />}/>
 
          
         </Routes>
+        <Modall/> 
         <Footer />
       </ChakraProvider>
     </Router>
