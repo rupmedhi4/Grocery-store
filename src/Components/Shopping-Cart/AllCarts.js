@@ -9,76 +9,47 @@ import {
   Grid,
   Divider,
   Flex,
+  useDisclosure,
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Stack,
+  VStack,
+  HStack,
 } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AddToCartHandler } from '../Redux/Slices/AllProductSlices';
+import { SimpleGrid } from '@chakra-ui/react';
+import { AddToCartHandler } from '../Redux/Slices/ShoppingCartSlices';
 
-export default function FeatureCard({ product }) {
-  const productArray = useSelector(state => state.ShoppingCartSlices.dummyArray);
-
+export default function AllCarts({ product, id }) {
+  const productArray = useSelector((state) => state.ShoppingCartSlices.dummyArray);
   const dispatch = useDispatch();
 
-  const addHandler = (id) => {
-    const filteredArray = productArray.filter(item => item.id === id);
-
-    dispatch(AddToCartHandler({filteredArray}))
-  //  console.log(filteredArray);
-    
+  const addHandler = () => {
+    const filteredArray = productArray.filter((item) => item.id === id);
+    dispatch(AddToCartHandler(filteredArray))
   };
 
   return (
-    <Box>
-      <Grid
-        templateColumns={['repeat(1, 1fr)', 'repeat(2, 1fr)', 'repeat(3, 1fr)', 'repeat(6, 1fr)']}
-        gap={6}
-        p={4}
-        mx="auto"
-        maxW="1200px"
-      >
-        {productArray.map((product) => (
-          <Box
-            key={product.id}
-            boxShadow="md"
-            borderRadius="md"
-            bg="blue.100"
-            overflow="hidden"
-            display="flex"
-            flexDirection="column"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <Image src={product.img} alt="Product" height="90px" objectFit="cover" />
-            <Divider bg="red" />
-            <Box p={4}>
-              <Heading size="md" textAlign="center" color="black" mb={2}>
-                {product.title}
-              </Heading>
-              <Text textAlign="center" color="purple.900">
-                {product.paragraph}
-              </Text>
-              <Text textAlign="center" color="purple.900" mt={3}>
-                {product.amount}
-              </Text>
-            </Box>
-            <Flex justifyContent="center" p={4} ml={4} mr={6}>
-              <ButtonGroup spacing={2}>
-                <Button variant="solid" colorScheme="red" size="sm" p={1} ml={1.5}>
-                  Buy now
-                </Button>
-                <Button
-                  variant="solid"
-                  colorScheme="red"
-                  size="sm"
-                  p={1}
-                  onClick={() => addHandler(product.id)}
-                >
-                  Add to cart
-                </Button>
-              </ButtonGroup>
-            </Flex>
-          </Box>
-        ))}
-      </Grid>
-    </Box>
+    <SimpleGrid columns={3} spacing={8}>
+      {productArray.map((product) => (
+        <Card key={product.id}>
+          <CardHeader>
+            <Heading size='md'>{product.title}</Heading>
+            <Image src={product.img} alt={product.title} />
+          </CardHeader>
+
+          <CardBody>
+            <Text>{product.amount}</Text>
+            <Text>{product.paragraph}</Text>
+          </CardBody>
+          <CardFooter justifyContent="center">
+            <Button>Order</Button>
+            <Button onClick={addHandler}>Add to Cart</Button>
+          </CardFooter>
+        </Card>
+      ))}
+    </SimpleGrid>
   );
 }

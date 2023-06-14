@@ -15,13 +15,14 @@ import { useNavigate } from "react-router-dom";
 import { ColorModeSwitcher } from "../ColorModeSwitcher";
 import { auth } from "./Firebase/FireBase";
 import { useSelector } from "react-redux";
-import Modall from "./Modal/Modal";
+import CartDrawer from "./AddCart/CartDrawer";
+
+import AddtoCart from "./AddCart/AddtoCart";
+import ShoppingCartSlices from "./Redux/Slices/ShoppingCartSlices";
 
 const Navbar = () => {
   const user = useSelector((state) => state.isLoginSlices.user);
-  const addToCartBadge = useSelector(
-    (state) => state.AllProductSlice.addToCart
-  );
+  const addToCartBadge = useSelector((state) => state.ShoppingCartSlices.addToCart);
 
   const { onOpen } = useDisclosure();
   const navigate = useNavigate();
@@ -41,8 +42,12 @@ const Navbar = () => {
       alert(err.message);
     }
   };
+  const addtoCartHandler =  () => {
+   navigate("/addcart")
+  };
 
   return (
+    <>
     <Flex
       as="nav"
       align="center"
@@ -141,7 +146,15 @@ const Navbar = () => {
               >
                 Sign Out
               </Button>
-            <Modall />
+              {/* <Button
+                colorScheme="teal"
+                variant="solid"
+                onClick={onOpen}
+              >
+               add to cart{addToCartBadge.length}
+              </Button> */}
+              <CartDrawer/>
+              
             </>
           ) : (
             <>
@@ -167,8 +180,10 @@ const Navbar = () => {
         </Flex>
       </Flex>
       <ColorModeSwitcher />
-      
     </Flex>
+    
+    </>
+    
   );
 };
 

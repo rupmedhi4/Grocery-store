@@ -8,7 +8,7 @@ export default function Cart() {
   return (
     <div>
       {productArray.map((item) => (
-        <AllCarts product={item} key={item.id}  />
+        <AllCarts product={item} key={item.id} id={item.id}  />
       ))}
     </div>
   );
