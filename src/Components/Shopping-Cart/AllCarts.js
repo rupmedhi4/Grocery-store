@@ -28,8 +28,8 @@ export default function AllCarts({ product, id }) {
 
   const addHandler = (id) => {
     const filteredArray = productArray.filter((item) => item.id === id);
-    dispatch(AddToCartHandler(filteredArray));
-    console.log(filteredArray);
+    dispatch(AddToCartHandler({filteredArray,id}));
+    
   };
 
   return (

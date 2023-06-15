@@ -41,6 +41,7 @@ const ShoppingCartSlices = createSlice({
             },
         ],
         addToCart: [],
+        amount:0,
 
     },
 
@@ -50,13 +51,30 @@ const ShoppingCartSlices = createSlice({
             console.log(data)
         },
         AddToCartHandler: (state, action) => {
+            const { filteredArray, id } = action.payload;
+      
             if (state.addToCart.length === 0) {
-                state.addToCart = [action.payload]
+              state.addToCart = [filteredArray];
+              state.amount += filteredArray[0].amount * filteredArray[0].Quantity;
             } else {
-                state.addToCart = [...state.addToCart, action.payload]
+              let itemAlreadyAdded = false;
+              state.addToCart.forEach((item) => {
+                item.forEach((cart) => {
+                  if (cart.id === id) {
+                    alert("Item already added");
+                    itemAlreadyAdded = true;
+                  }
+                });
+              });
+      
+              if (!itemAlreadyAdded) {
+                state.addToCart = [...state.addToCart, filteredArray];
+                state.amount += filteredArray[0].amount * filteredArray[0].Quantity;
+              }
             }
-             
-        },
+      
+            console.log(state.amount);
+          },
         QuantityIncrease: (state, action) => {
             const id = action.payload;
             const updatedCart = state.addToCart.map((cart) => {

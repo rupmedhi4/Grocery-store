@@ -58,28 +58,29 @@ export default function CartDrawer() {
               <Box>My Carts ({user.length})</Box>
               <HStack>
                 <Button onClick={onClose}>Close</Button>
-                <Button onClick={()=>(dispatch(clearChart))}>Clear Carts</Button>
+                <Button >Clear Carts</Button>
               </HStack>
             </Flex>
-            {user.map((addcart) =>
-              addcart.map((item) => (
-                <Box key={item.id} py={2} borderBottom='1px solid #ddd' align='center' height={"300"}>
-                  <HStack align='center' justify='space-between'ml={"170"} >
-                    <Box>{item.title}</Box>
-                    <Button onClick={()=>(dispatch(removeCart(item.id)))}>X</Button>
-                  </HStack>
-                  <Text>Total Quantity : {item.Quantity}</Text>
-                  <DrawerBody mt={"-10"} overflowY={'hidden'}>
-                    <Image src={item.img} alt={item.title} objectFit='cover' height='200px' />
-                    <Text mt={"-10"} >Price : {item.amount}</Text>
-                  </DrawerBody>
-                  <ButtonGroup >
-                    <Button onClick={()=>(increaseHandler(item.id))}>+</Button>
-                    <Button onClick={()=>(decreaseHandler(item.id))}>-</Button>
-                  </ButtonGroup>
-                </Box>
-              ))
-            )}
+          
+               {user.map((add)=>(
+                   add.map((item)=>(
+                    <Box key={item.id} py={2} borderBottom='1px solid #ddd' align='center' height={"300"}>
+                    <HStack align='center' justify='space-between'ml={"170"} >
+                      <Box>{item.title}</Box>
+                      <Button onClick={()=>(dispatch(removeCart(item.id)))}>X</Button>
+                    </HStack>
+                    <Text>Total Quantity : {item.Quantity}</Text>
+                    <DrawerBody mt={"-10"} overflowY={'hidden'}>
+                      <Image src={item.img} alt={item.title} objectFit='cover' height='200px' />
+                      <Text mt={"-10"} >Price : {item.amount}</Text>
+                    </DrawerBody>
+                    <ButtonGroup >
+                      <Button onClick={()=>(increaseHandler(item.id))}>+</Button>
+                      <Button onClick={()=>(decreaseHandler(item.id))}>-</Button>
+                    </ButtonGroup>
+                  </Box>
+                   ))
+               ))}
           </DrawerBody>
           <DrawerFooter>
             <Button variant='outline' mr={3} onClick={onClose}>
