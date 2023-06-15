@@ -75,14 +75,22 @@ const ShoppingCartSlices = createSlice({
       
             console.log(state.amount);
           },
-        QuantityIncrease: (state, action) => {
+          QuantityIncrease: (state, action) => {
             const id = action.payload;
+            let realAmount = 0;
+            state.dummyArray.map((product) => {
+              if (product.id === id) {
+                realAmount = product.amount;
+              }
+            });
+            
             const updatedCart = state.addToCart.map((cart) => {
               const updatedItems = cart.map((item) => {
                 if (item.id === id) {
                   return {
                     ...item,
                     Quantity: item.Quantity + 1,
+                    amount: item.amount + realAmount,
                   };
                 }
                 return item;
@@ -91,6 +99,7 @@ const ShoppingCartSlices = createSlice({
             });
             state.addToCart = updatedCart;
           },
+          
         QuantityDecrease: (state, action) => {
             const id = action.payload;
             const updatedCart = state.addToCart.map((cart) => {
