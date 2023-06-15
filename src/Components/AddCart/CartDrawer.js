@@ -58,7 +58,7 @@ export default function CartDrawer() {
               <Box>My Carts ({user.length})</Box>
               <HStack>
                 <Button onClick={onClose}>Close</Button>
-                <Button>Clear Carts</Button>
+                <Button onClick={()=>(dispatch(clearChart))}>Clear Carts</Button>
               </HStack>
             </Flex>
             {user.map((addcart) =>

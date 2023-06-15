@@ -94,8 +94,14 @@ const ShoppingCartSlices = createSlice({
             state.addToCart = updatedCart;
           },
           removeCart : (state, action)=>{
-                console.log(action.payload)
+            const id = action.payload
+            const removeItems = state.addToCart.map((items)=>{
+                const removeItem = items.filter((cart)=>(cart.id==id))
+                return removeItem;
+            })
+            state.addToCart = removeItems;
           }
+          
            
     },
 });
