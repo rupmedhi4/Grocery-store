@@ -72,12 +72,35 @@ const ShoppingCartSlices = createSlice({
               return updatedItems;
             });
             state.addToCart = updatedCart;
+          },
+        QuantityDecrease: (state, action) => {
+            const id = action.payload;
+            const updatedCart = state.addToCart.map((cart) => {
+              const updatedItems = cart.map((item) => {
+                if (item.id === id) {
+                    if(item.Quantity === 1){
+                        return item;
+                    }else{
+                        return {
+                            ...item,
+                            Quantity: item.Quantity - 1,
+                        }
+                    }  
+                }
+                return item;
+              });
+              return updatedItems;
+            });
+            state.addToCart = updatedCart;
+          },
+          removeCart : (state, action)=>{
+                console.log(action.payload)
           }
-          
+           
     },
 });
 
 
-export const { ShowAllCarts, AddToCartHandler,QuantityIncrease } = ShoppingCartSlices.actions;
+export const { ShowAllCarts, AddToCartHandler,QuantityIncrease,QuantityDecrease,removeCart } = ShoppingCartSlices.actions;
 
 export default ShoppingCartSlices.reducer;

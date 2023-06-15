@@ -19,7 +19,7 @@ import {
 } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Text } from '@chakra-ui/react';
-import { QuantityIncrease } from '../Redux/Slices/ShoppingCartSlices';
+import { QuantityIncrease,QuantityDecrease,removeCart } from '../Redux/Slices/ShoppingCartSlices';
 
 export default function CartDrawer() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -29,6 +29,9 @@ export default function CartDrawer() {
 
   const increaseHandler = (id)=>{
     dispatch(QuantityIncrease(id))    
+  }
+  const decreaseHandler = (id)=>{
+    dispatch(QuantityDecrease(id))    
   }
 
   return (
@@ -63,7 +66,7 @@ export default function CartDrawer() {
                 <Box key={item.id} py={2} borderBottom='1px solid #ddd' align='center' height={"300"}>
                   <HStack align='center' justify='space-between'ml={"170"} >
                     <Box>{item.title}</Box>
-                    <Button>X</Button>
+                    <Button onClick={()=>(dispatch(removeCart(item.id)))}>X</Button>
                   </HStack>
                   <Text>Total Quantity : {item.Quantity}</Text>
                   <DrawerBody mt={"-10"} overflowY={'hidden'}>
@@ -72,7 +75,7 @@ export default function CartDrawer() {
                   </DrawerBody>
                   <ButtonGroup >
                     <Button onClick={()=>(increaseHandler(item.id))}>+</Button>
-                    <Button>-</Button>
+                    <Button onClick={()=>(decreaseHandler(item.id))}>-</Button>
                   </ButtonGroup>
                 </Box>
               ))
