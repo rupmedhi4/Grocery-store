@@ -19,7 +19,7 @@ import {
 } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Text } from '@chakra-ui/react';
-import { QuantityIncrease, QuantityDecrease, removeCart } from '../Redux/Slices/ShoppingCartSlices';
+import { QuantityIncrease, QuantityDecrease, removeCart,clearCartHandler } from '../Redux/Slices/ShoppingCartSlices';
 
 export default function CartDrawer() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -59,7 +59,7 @@ export default function CartDrawer() {
               <Box>My Carts ({user.length})</Box>
               <HStack>
                 <Button onClick={onClose}>Close</Button>
-                <Button >Clear Carts</Button>
+                <Button onClick={()=>(dispatch(clearCartHandler()))}>Clear Carts</Button>
               </HStack>
             </Flex>
 

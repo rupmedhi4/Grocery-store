@@ -86,13 +86,16 @@ const ShoppingCartSlices = createSlice({
             
             const updatedCart = state.addToCart.map((cart) => {
               const updatedItems = cart.map((item) => {
-                if (item.id === id) {
+                if (item.id === id) { 
+                    state.amount =  state.amount +realAmount
                   return {
                     ...item,
                     Quantity: item.Quantity + 1,
-                    amount: item.amount + realAmount,
+                    amount: item.amount + realAmount
+                    
                   };
                 }
+                
                 return item;
               });
               return updatedItems;
@@ -102,18 +105,22 @@ const ShoppingCartSlices = createSlice({
           
         QuantityDecrease: (state, action) => {
             const id = action.payload;
+            let realAmount = 0;
+            state.dummyArray.map((product) => {
+              if (product.id === id) {
+                realAmount = product.amount;
+              }
+            });        
             const updatedCart = state.addToCart.map((cart) => {
               const updatedItems = cart.map((item) => {
-                if (item.id === id) {
-                    if(item.Quantity === 1){
-                        return item;
-                    }else{
-                        return {
-                            ...item,
-                            Quantity: item.Quantity - 1,
-                        }
-                    }  
-                }
+                if (item.id === id && item.Quantity >1) { 
+                    state.amount =  state.amount - realAmount
+                  return {
+                    ...item,
+                    Quantity: item.Quantity - 1,
+                    amount: item.amount - realAmount             
+                  };
+                }      
                 return item;
               });
               return updatedItems;
@@ -123,10 +130,19 @@ const ShoppingCartSlices = createSlice({
           removeCart : (state, action)=>{
             const id = action.payload
             const removeItems = state.addToCart.map((items)=>{
-                const removeItem = items.filter((cart)=>(cart.id==id))
+                const removeItem = items.filter((cart)=>(cart.id!==id))
+
+               items.map((item) => {
+                    if (item.id === id ) { 
+                        state.amount =  state.amount - item.amount   
+                    }    
+                } ) 
                 return removeItem;
             })
             state.addToCart = removeItems;
+          },
+          clearCartHandler : (state, action)=>{
+            state.addToCart = []
           }
           
            
@@ -134,6 +150,6 @@ const ShoppingCartSlices = createSlice({
 });
 
 
-export const { ShowAllCarts, AddToCartHandler,QuantityIncrease,QuantityDecrease,removeCart } = ShoppingCartSlices.actions;
+export const { ShowAllCarts, AddToCartHandler,QuantityIncrease,QuantityDecrease,removeCart,clearCartHandler } = ShoppingCartSlices.actions;
 
 export default ShoppingCartSlices.reducer;
