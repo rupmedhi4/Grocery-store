@@ -26,9 +26,10 @@ export default function AllCarts({ product, id }) {
   const productArray = useSelector((state) => state.ShoppingCartSlices.dummyArray);
   const dispatch = useDispatch();
 
-  const addHandler = () => {
+  const addHandler = (id) => {
     const filteredArray = productArray.filter((item) => item.id === id);
-    dispatch(AddToCartHandler(filteredArray))
+    dispatch(AddToCartHandler(filteredArray));
+    console.log(filteredArray);
   };
 
   return (
@@ -44,9 +45,9 @@ export default function AllCarts({ product, id }) {
             <Text>{product.amount}</Text>
             <Text>{product.paragraph}</Text>
           </CardBody>
-          <CardFooter justifyContent="center">
+          <CardFooter justifyContent='center'>
             <Button>Order</Button>
-            <Button onClick={addHandler}>Add to Cart</Button>
+            <Button onClick={() => addHandler(product.id)}>Add to Cart</Button>
           </CardFooter>
         </Card>
       ))}

@@ -13,20 +13,29 @@ import {
   Image,
   Box,
   HStack,
-  Flex
+  Flex,
+  ButtonGroup,
+  Stack,
 } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Text } from '@chakra-ui/react';
+import { QuantityIncrease } from '../Redux/Slices/ShoppingCartSlices';
 
 export default function CartDrawer() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
   const user = useSelector((state) => state.ShoppingCartSlices.addToCart);
+  const dispatch = useDispatch();
+
+  const increaseHandler = (id)=>{
+    dispatch(QuantityIncrease(id))    
+  }
 
   return (
     <>
       <Button ref={btnRef} colorScheme='teal' onClick={onOpen}>
         Add to cart {user.length}
-      </Button>
+      </Button> 
 
       <Drawer
         isOpen={isOpen}
@@ -37,7 +46,7 @@ export default function CartDrawer() {
       >
         <DrawerOverlay />
         <DrawerContent>
-          
+
           <DrawerBody
             height='400px'
             overflowY={user.length > 3 ? 'scroll' : 'initial'}
@@ -45,17 +54,26 @@ export default function CartDrawer() {
             <Flex align='center' justify='space-between' mt={"8"} mr={"-3"}>
               <Box>My Carts ({user.length})</Box>
               <HStack>
-                <Button>Close</Button>
+                <Button onClick={onClose}>Close</Button>
                 <Button>Clear Carts</Button>
               </HStack>
             </Flex>
             {user.map((addcart) =>
               addcart.map((item) => (
-                <Box key={item.id} py={2} borderBottom='1px solid #ddd'>
-                  <DrawerHeader>{item.title}</DrawerHeader>
-                  <DrawerBody>
+                <Box key={item.id} py={2} borderBottom='1px solid #ddd' align='center' height={"300"}>
+                  <HStack align='center' justify='space-between'ml={"170"} >
+                    <Box>{item.title}</Box>
+                    <Button>X</Button>
+                  </HStack>
+                  <Text>Total Quantity : {item.Quantity}</Text>
+                  <DrawerBody mt={"-10"} overflowY={'hidden'}>
                     <Image src={item.img} alt={item.title} objectFit='cover' height='200px' />
+                    <Text mt={"-10"} >Price : {item.amount}</Text>
                   </DrawerBody>
+                  <ButtonGroup >
+                    <Button onClick={()=>(increaseHandler(item.id))}>+</Button>
+                    <Button>-</Button>
+                  </ButtonGroup>
                 </Box>
               ))
             )}
